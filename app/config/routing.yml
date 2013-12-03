@@ -1,0 +1,5 @@
+api:
+    resource: "@APIBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
