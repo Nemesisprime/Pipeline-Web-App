@@ -74,3 +74,7 @@ fos_user:
     registration:
         confirmation:
             enabled: false
+            
+#Guzzle
+playbloom_guzzle:
+    web_profiler: true
