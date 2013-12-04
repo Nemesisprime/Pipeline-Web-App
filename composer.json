@@ -22,7 +22,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ezyang/htmlpurifier": "~4.5",
         "playbloom/guzzle-bundle": "v1.0.1",
-        "friendsofsymfony/rest-bundle": "1.1.0"
+        "friendsofsymfony/rest-bundle": "1.1.0",
+        "leafo/lessphp": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

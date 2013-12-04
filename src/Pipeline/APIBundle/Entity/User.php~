@@ -22,6 +22,14 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=150)
+     */
+    protected $email;
+
     /**
      * @var \DateTime
      *
