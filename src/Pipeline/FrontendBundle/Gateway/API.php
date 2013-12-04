@@ -11,6 +11,8 @@ use Guzzle\Http\Client;
  */
 class API extends Client { 
     
-    
+     public function __construct() { 
+         
+     }
     
 }
