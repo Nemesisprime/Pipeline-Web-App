@@ -24,7 +24,4 @@ CVS
 /app/logs/*
 /vendor/
 /app/config/parameters.yml
-
-#Entity Backups
-src/Pipeline/APIBundle/Entity/Task.php~
-src/Pipeline/APIBundle/Entity/User.php~
+*.php~
