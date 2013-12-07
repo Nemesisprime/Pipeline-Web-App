@@ -10,12 +10,13 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\RouteResource;
 use FOS\RestBundle\Routing\ClassResourceInterface;
 
+use Pipeline\APIBundle\Entity\Task;
+use Pipeline\APIBundle\Form\TaskType;
 
 /**
  * TasksController class.
- * @RouteResource("Task")
  */
-class TasksController extends FOSRestController implements ClassResourceInterface
+class TasksController extends FOSRestController
 {
     /**
      * [GET] /tasks
@@ -23,7 +24,7 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      * @access public
      * @return void
      */
-    public function cgetAction()
+    public function getTasksAction()
     {
         $user = $this->get("security.context")->getToken()->getUser();
         $tasks = $this->getDoctrine()->getRepository("APIBundle:Task")->findTasksFor($user);
@@ -37,8 +38,34 @@ class TasksController extends FOSRestController implements ClassResourceInterfac
      * @param mixed $slug
      * @return void
      */
-    public function getAction($slug)
+    public function getTaskAction($slug)
     {
+
+    }
     
+    /**
+     * [POST] /tasks
+     * 
+     * @access public
+     * @return void
+     */
+    public function postTasksAction()
+    {
+        
+    }
+    
+    /**
+     * [OPTIONS] /tasks=
+     * 
+     * @access public
+     * @return void
+     */
+    public function optionsTasksAction() 
+    { 
+        return $this->handleView($this->view(array("status" => array(0 => "STATUS_ACTIVE", 
+                                                                     1 => "STATUS_COMPLETE", 
+                                                                     2 => "STATUS_PENDING", 
+                                                                     3 => "STATUS_REJECTED", 
+                                                                     4 => "STATUS_REQUEST"))));
     }
 }

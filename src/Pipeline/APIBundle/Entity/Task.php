@@ -6,11 +6,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Pipline\APIBundle\Constants;
 
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+
+
 /**
  * Task
  *
  * @ORM\Table()
  * @ORM\Entity(repositoryClass="Pipeline\APIBundle\Entity\TaskRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Task
 {
@@ -20,6 +26,8 @@ class Task
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @Expose
      */
     private $id;
 
@@ -27,6 +35,8 @@ class Task
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=150, nullable=true)
+     *
+     * @Expose
      */
     private $name;
 
@@ -34,13 +44,15 @@ class Task
      * @var string
      *
      * @ORM\Column(name="status", type="integer")
+     *
+     * @Expose
      */
     private $status;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="owner", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="tasks")
      */
     private $owner;
 
@@ -48,6 +60,8 @@ class Task
      * @var string
      *
      * @ORM\Column(name="description", type="text", nullable=true)
+     *
+     * @Expose
      */
     private $description;
 
@@ -55,6 +69,8 @@ class Task
      * @var \DateTime
      *
      * @ORM\Column(name="created_at", type="datetime")
+     *
+     * @Expose
      */
     private $createdAt;
 
@@ -69,6 +85,8 @@ class Task
      * @var \DateTime
      *
      * @ORM\Column(name="scheduled_at", type="datetime", nullable=true)
+     *
+     * @Expose
      */
     private $scheduledAt;
     
@@ -76,6 +94,8 @@ class Task
      * @var \DateTime
      *
      * @ORM\Column(name="due_at", type="datetime", nullable=true)
+     *
+     * @Expose
      */
     private $dueAt;
 
@@ -90,16 +110,22 @@ class Task
      * @var \DateTime
      *
      * @ORM\Column(name="completed_at", type="datetime", nullable=true)
+     *
+     * @Expose
      */
     private $completedAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Task", mappedBy="parentTask")
+     *
+     * @Expose
      */
     private $subtasks;
 
 	/**
      * @ORM\ManyToOne(targetEntity="Task", inversedBy="subtasks")
+     *
+     * @Expose  
      */
     private $parentTask;
 
@@ -170,29 +196,6 @@ class Task
     public function getStatus()
     {
         return $this->status;
-    }
-
-    /**
-     * Set owner
-     *
-     * @param integer $owner
-     * @return Task
-     */
-    public function setOwner($owner)
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-    /**
-     * Get owner
-     *
-     * @return integer 
-     */
-    public function getOwner()
-    {
-        return $this->owner;
     }
 
     /**
@@ -410,5 +413,28 @@ class Task
     public function getParentTask()
     {
         return $this->parentTask;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param \Pipeline\APIBundle\Entity\User $owner
+     * @return Task
+     */
+    public function setOwner(\Pipeline\APIBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \Pipeline\APIBundle\Entity\User 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
     }
 }

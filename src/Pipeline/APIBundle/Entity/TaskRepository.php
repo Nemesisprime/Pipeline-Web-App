@@ -17,7 +17,7 @@ class TaskRepository extends EntityRepository
     public function findTasksFor(User $user) 
     { 
         $em = $this->getEntityManager();
-        $query = $em->createQuery("select t from APIBundle:Task t");
+        $query = $em->createQuery("select t from APIBundle:Task t WHERE t.owner = :user")->setParameter("user", $user);
         
         return $query->getResult();
     }

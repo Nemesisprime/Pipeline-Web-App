@@ -28,6 +28,16 @@ class User extends BaseUser
      * @ORM\Column(name="joined_at", type="datetime")
      */
     private $joinedAt;
+    
+    /**
+     * Collections!
+     */
+     
+     /**
+      * @param \Doctrine\Common\Collections\Collection $tasks
+      * @ORM\OneToMany(targetEntity="Task", mappedBy="owner")
+      */
+     private $tasks;
 
 	/**
 	 * Construct (be sure to call parent construct).
@@ -40,6 +50,7 @@ class User extends BaseUser
         parent::__construct();
         
         $this->joinedAt = new \DateTime();
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -73,5 +84,38 @@ class User extends BaseUser
     public function getJoinedAt()
     {
         return $this->joinedAt;
+    }
+
+    /**
+     * Add tasks
+     *
+     * @param \Pipeline\APIBundle\Entity\Task $tasks
+     * @return User
+     */
+    public function addTask(\Pipeline\APIBundle\Entity\Task $tasks)
+    {
+        $this->tasks[] = $tasks;
+
+        return $this;
+    }
+
+    /**
+     * Remove tasks
+     *
+     * @param \Pipeline\APIBundle\Entity\Task $tasks
+     */
+    public function removeTask(\Pipeline\APIBundle\Entity\Task $tasks)
+    {
+        $this->tasks->removeElement($tasks);
+    }
+
+    /**
+     * Get tasks
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTasks()
+    {
+        return $this->tasks;
     }
 }
