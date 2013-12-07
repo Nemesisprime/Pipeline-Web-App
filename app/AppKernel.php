@@ -16,9 +16,14 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            
+            /* Other Bundles */
+            new JMS\SerializerBundle\JMSSerializerBundle(),
             new Playbloom\Bundle\GuzzleBundle\PlaybloomGuzzleBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
             
+            /* Included Bundles */
             new Pipeline\APIBundle\APIBundle(),
             new Pipeline\FrontendBundle\FrontendBundle(),
             

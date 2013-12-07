@@ -4,6 +4,8 @@ namespace Pipeline\APIBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
 
+use Pipeline\APIBundle\Entity\User;
+
 /**
  * TaskRepository
  *
@@ -12,4 +14,11 @@ use Doctrine\ORM\EntityRepository;
  */
 class TaskRepository extends EntityRepository
 {
+    public function findTasksFor(User $user) 
+    { 
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("select t from APIBundle:Task t");
+        
+        return $query->getResult();
+    }
 }

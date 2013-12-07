@@ -9,6 +9,12 @@ frontend:
     resource: "@FrontendBundle/Controller/"
     type:     annotation
     prefix:   /
+    
+# API Routing
+tasks:
+    type:     rest
+    prefix:   /api
+    resource: Pipeline\APIBundle\Controller\TasksController
 
 # FOS Routing
 fos_user_security:

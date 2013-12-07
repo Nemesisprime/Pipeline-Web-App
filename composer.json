@@ -22,6 +22,7 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "ezyang/htmlpurifier": "~4.5",
         "playbloom/guzzle-bundle": "v1.0.1",
+        "jms/serializer-bundle": "0.12.0",
         "friendsofsymfony/rest-bundle": "1.1.0",
         "leafo/lessphp": "dev-master"
     },

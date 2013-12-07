@@ -75,6 +75,11 @@ fos_user:
         confirmation:
             enabled: false
             
+#FOSRest
+fos_rest:
+    routing_loader:
+        default_format: json
+            
 #Guzzle
 playbloom_guzzle:
     web_profiler: true
