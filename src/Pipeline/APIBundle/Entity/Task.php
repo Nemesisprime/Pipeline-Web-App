@@ -4,7 +4,7 @@ namespace Pipeline\APIBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Pipline\APIBundle\Constants;
+use Pipeline\APIBundle\Constants;
 
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;

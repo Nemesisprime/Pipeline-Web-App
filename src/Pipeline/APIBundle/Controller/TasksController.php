@@ -26,7 +26,7 @@ class TasksController extends FOSRestController
      */
     public function getTasksAction()
     {
-        $user = $this->get("security.context")->getToken()->getUser();
+        $user = $this->getUser();
         $tasks = $this->getDoctrine()->getRepository("APIBundle:Task")->findTasksFor($user);
         return $this->handleView($this->view($tasks, 200));
     }
@@ -51,7 +51,20 @@ class TasksController extends FOSRestController
      */
     public function postTasksAction()
     {
+        $request = $this->getRequest();
+        $user = $this->getUser();
+        $task = new Task();
+        $task->setOwner($user);
         
+        $form = $this->createForm(new TaskType(), $task);
+        $form->handleRequest($request);
+        
+        if($form->isValid()) 
+        { 
+            throw new HttpException("Yolo1");
+        } else { 
+            throw new HttpException("Yolo2");
+        }
     }
     
     /**
