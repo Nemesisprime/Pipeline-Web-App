@@ -1,10 +1,9 @@
-require(['pipeline'], function(p) { 
+require(['pipeline'], function(Pipeline) { 
 
     
     $(document).ready(function() { 
     
-        window.Pipeline = new p;
-        
+        var pipeline = Pipeline.initialize();
     });
 
     
