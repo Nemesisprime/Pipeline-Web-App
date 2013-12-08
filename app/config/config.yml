@@ -84,3 +84,14 @@ fos_rest:
 #Guzzle
 playbloom_guzzle:
     web_profiler: true
+
+#requireJS 
+hearsay_require_js:
+    base_dir: %kernel.root_dir%/Resources/public/js
+    optimizer:
+        path: %kernel.root_dir%/Resources/public/js/r.js
+    paths:
+        frameworks: %kernel.root_dir%/Resources/public/js/frameworks
+#        plugins: %kernel.root_dir%/Resources/public/js/plugins
+#        user: '@UserBundle/Resources/public/js'
+#        photo: '@PhotoBundle/Resources/public/js'

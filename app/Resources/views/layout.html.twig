@@ -6,6 +6,7 @@
         {% stylesheets '../app/Resources/public/styles/*' %}
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
+        {{ require_js_initialize({ 'main' : 'main' }) }}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>

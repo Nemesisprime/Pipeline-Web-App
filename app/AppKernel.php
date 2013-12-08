@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Playbloom\Bundle\GuzzleBundle\PlaybloomGuzzleBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Hearsay\RequireJSBundle\HearsayRequireJSBundle(),
             
             /* Included Bundles */
             new Pipeline\APIBundle\APIBundle(),
