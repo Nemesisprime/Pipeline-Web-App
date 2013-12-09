@@ -7,6 +7,21 @@
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
         {{ require_js_initialize({ 'main' : 'main' }) }}
+        <script type="text/javascript">
+        	var Global = new Object();
+        	Global.settings = new Object();
+        	{% if app.debug %}
+	        	Global.settings.url = "/app_dev.php/";
+        	{% else %}
+	        	Global.settings.url = "/";
+        	{% endif %}
+        	{% block global_variables %}
+        	{# MAKE SURE TO CALL parent() WHEN EXTENDING THIS BLOCK OR YOU'LL BREAK A LOT OF SHIT #}
+        		{% if app.user %}Global.user = {{ app.user|serialize|raw }};{% endif %}
+        	{% endblock %}
+        	
+        	{% block require %}{% endblock %}
+        </script>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>

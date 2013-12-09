@@ -2,14 +2,20 @@ define(['require',
 		'jquery', 
 		'frameworks/spine', 
 		'frameworks/manager', 
-		'frameworks/ajax'
+		'frameworks/ajax',
+		'model'
 		], function(require) {
 	
 	/* Require definitions */
+	var Model = require('model');
+	var Task = Model.task;
 	
 	/* Initialize function for setting up views */
 	var initialize = function(){
 		var app = new Application();
+		
+		/* Fetch the model! */
+		Task.fetch();
 		
 		return app;
 	}	
@@ -32,7 +38,6 @@ define(['require',
 	var Application = Spine.Controller.sub({
 		
 		init: function() { 
-			
 			/* Add to the manager */
 			this.taskController = new TasksController;
 			this.dashboardController = new DashbaordController;
