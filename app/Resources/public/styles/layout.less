@@ -22,10 +22,13 @@
 @overlay-background-color: #fff;
 @sharpborder: #ddd;
 
+@primary-font: 'Alegreya Sans', sans-serif;
+
 /* #Site Styles
 ================================================== */
 body { 
     background-color: @primary-background-color;
+    font-family: @primary-font;
 }
 
 .header { 
@@ -43,7 +46,7 @@ body {
         }
         
         .navigation-edge { 
-            font-size: 12px;
+            font-size: 14px;
             text-align: right;
             
             ul { 
@@ -66,6 +69,7 @@ body {
 ================================================== */
 .body { 
 	margin-top: 15px !important;
+	font-family: @primary-font;
 }
 
 #sidebar { 
@@ -102,8 +106,16 @@ body {
 			
 			&:last-child { 
 				border-bottom: 0px;
+				text-align: center;
+				padding-right: 20px;
 			}
 		}
+	}
+}
+
+#contant { 
+	h2 { 
+		font-family: @primary-font;
 	}
 }
 

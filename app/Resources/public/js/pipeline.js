@@ -26,7 +26,12 @@ define(['require',
 	});
 	
 	var TasksController = Spine.Controller.sub({ 
+		el: $('#tasks_template'), 
 		
+		init: function() 
+		{ 		
+			console.log("tasks logged");
+		}
 	});
 	
 	
@@ -37,13 +42,18 @@ define(['require',
 	/* The primary application controller */
 	var Application = Spine.Controller.sub({
 		
+		elements: { 
+			"#content": "content"
+		},
+		
 		init: function() { 
 			/* Add to the manager */
-			this.taskController = new TasksController;
-			this.dashboardController = new DashbaordController;
+			this.taskController = new TasksController({ content: this.content });
+			this.dashboardController = new DashbaordController({ content: this.content });
 			
 			this.manager = new Spine.Manager(this.taskController, this.dashboardController);
 			
+			this.taskController.active();
 		}
 		
 	});
