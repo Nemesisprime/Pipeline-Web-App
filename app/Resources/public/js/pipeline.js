@@ -3,6 +3,7 @@ define(['require',
 		'frameworks/spine', 
 		'frameworks/manager', 
 		'frameworks/ajax',
+		'frameworks/handlebars',
 		'model'
 		], function(require) {
 	
@@ -30,7 +31,7 @@ define(['require',
 		
 		init: function() 
 		{ 		
-			console.log("tasks logged");
+			console.log("Tasks uploaded");
 		}
 	});
 	

@@ -13,8 +13,19 @@
     <div id="content" class="columns twelve">
 		<div id="tasks_template">
 			<h2>All Tasks</h2>
+			
+			<ul class="task-list">
+				<li class="task-item">
+					Test
+				</li>
+			</ul>
 		</div>
 
     </div>
 </div>
+{% endblock %}
+
+{% block handlebars %}
+	{{ parent() }}
+	{% include "FrontendBundle:Tasks:task.html.twig" with { "name": "task_item"} %}
 {% endblock %}
