@@ -124,11 +124,57 @@ body {
 	border-radius: 3px;
 	margin: 0px;
 	padding: 0px;
+	color: #545454;
 
 	.task-item { 
 		background-color: #fff;
 		margin: 0px;
 		padding: 10px;
+		border-bottom: #EBEBEB 1px solid;
+		
+		&:last-child { 
+			border-bottom: none;
+		}
+	}
+}
+
+.task-item { 
+	input[type="checkbox"] {
+	    display: none;
+	 
+	    &:checked + label:before {
+	        background: #cecece;
+	    }
+	    
+	    &:hover:not(:checked) + label:hover:before { 
+		    background: #f0f0f0;
+	    }
+	}
+
+	.input-helper {
+	    position: relative;
+	    display: inline-block;
+	    margin-bottom: 0px;
+	    
+	    &:before {
+	        content: '';
+	        display: block;
+	        position: absolute;
+	    }
+	}
+	
+	.input-helper--checkbox {
+	    padding-left: 30px;
+	 
+	    &:before {
+	        top: 2px;
+	        left: 0;
+	        width: 13px;
+	        height: 13px;
+	        border: 1px solid #cecece;
+	        border-radius: 3px;
+	        cursor: pointer;
+	    }
 	}
 }
 

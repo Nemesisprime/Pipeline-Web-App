@@ -2,8 +2,7 @@
 
 {% block body %}
 	{% raw %}
-		<li class="task-item">
-			Task
-		</li>
+		<input id="complete-box-{{id}}" class="complete-box" type="checkbox" name="completed" value="completed" />
+        <label for="complete-box-{{id}}" class="input-helper input-helper--checkbox">{{name}}</label>
 	{% endraw %}
 {% endblock %}
