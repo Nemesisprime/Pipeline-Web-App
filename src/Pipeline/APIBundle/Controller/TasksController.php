@@ -2,46 +2,48 @@
 
 namespace Pipeline\APIBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+	Symfony\Component\HttpFoundation\Request;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+	Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 use FOS\RestBundle\Controller\FOSRestController,
 	FOS\RestBundle\Controller\Annotations\RouteResource,
 	FOS\RestBundle\Routing\ClassResourceInterface;
 
-use FOS\RestBundle\Request\ParamFetcher,
-    FOS\RestBundle\Controller\Annotations\QueryParam,
-    FOS\RestBundle\Request\ParamFetcherInterface,
-    FOS\RestBundle\Controller\Annotations\RequestParam;
-
-use Pipeline\APIBundle\Entity\Task;
-use Pipeline\APIBundle\Form\TaskType;
+use Pipeline\APIBundle\Entity\Task,
+	Pipeline\APIBundle\Form\TaskType;
 
 /**
  * TasksController class.
  */
 class TasksController extends FOSRestController
 {
+
+	public function isOwn($task, $user) 
+	{ 
+		return ($task->getOwner()->getId() == $user->getId() ? true : false);
+	}
+
+
     /**
      * [GET] /tasks
      * 
      * @access public
      * @return View Object
      *
-     * @Secure("ROLE_USER")
-     * @QueryParam(name="offset", requirements="\d+", default="0", description="Offset to fetch results from.")
-     * @QueryParam(name="limit", requirements="\d+", default="100", description="Limit result amounts.")
+     * @Security("has_role('ROLE_USER')")
      */
-    public function getTasksAction(ParamFetcher $paramFetcher)
+    public function getTasksAction(Request $request)
     {
         $user = $this->getUser();
         
-        $offset = $paramFetcher->get('offset');
-        $limit = $paramFetcher->get('limit');
+        $offset = $request->query->getInt('offset', 0);
+        $limit = $request->query->getInt('limit', 100);
         
-        /* We just select all tasks, which is the preferred way  */
+        /* We just select all tasks, which is the preferred #dev way  */
         $tasks = $this->getDoctrine()->getRepository("APIBundle:Task")->findTasksFor($user);
         
         /* Hand the tasks to the View and say OK */
@@ -52,16 +54,24 @@ class TasksController extends FOSRestController
      * [GET] /tasks/{id}
      * 
      * @access public
-     * @param mixed $slug
-     * @return void
+     * @param mixed $id - individual task ID, this won't be called very often so we'll heavily cache
+     * that shit.
+     * @return View Object
+     *
+     * @Security("has_role('ROLE_USER')")
      */
-    public function getTaskAction($slug)
+    public function getTaskAction($id)
     {
 	    $user = $this->getUser();
-	    $task = $this->getDoctrine()->getRepository("APIBundle:Task")->find($slug);
+	    $task = $this->getDoctrine()->getRepository("APIBundle:Task")->find($id);
+	    
+	    if(!$task || !$this->isOwn($task, $user)) { 
+		    throw $this->createNotFoundException("No task ID $id is available.");
+	    }
 	    
 	    $view = $this->view();
-        $view->setStatusCode(501); //Not Implemented, yet. When the API becomes open...
+        $view->setData($task);
+        $view->setStatusCode(200);
         
         return $this->get('fos_rest.view_handler')->handle($view);
     }
