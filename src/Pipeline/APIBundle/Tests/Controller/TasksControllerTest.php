@@ -2,16 +2,17 @@
 
 namespace Pipeline\APIBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Pipeline\APIBundle\Tests\APITest;
 
-class DefaultControllerTest extends WebTestCase
-{
-    public function testIndex()
+class TasksControllerTest extends APITest
+
+    /*
+public function testIndex()
     {
         $client = static::createClient();
-
         $crawler = $client->request('GET', '/hello/Fabien');
 
         $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
     }
+*/
 }

@@ -25,7 +25,9 @@
         "jms/serializer-bundle": "0.12.0",
         "friendsofsymfony/rest-bundle": "1.1.0",
         "leafo/lessphp": "dev-master",
-        "hearsay/require-js-bundle": "2.0.*@dev"
+        "hearsay/require-js-bundle": "2.0.*@dev",
+        "doctrine/doctrine-fixtures-bundle": "dev-master",
+        "liip/functional-test-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

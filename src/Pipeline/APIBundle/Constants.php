@@ -1,5 +1,5 @@
 <?php
-namespace bt\APIBundle\Util;
+namespace Pipeline\APIBundle;
 
 /**
  * Constants static class.
