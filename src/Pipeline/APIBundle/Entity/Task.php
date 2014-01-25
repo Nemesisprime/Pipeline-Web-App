@@ -136,7 +136,6 @@ class Task
     public function __construct()
     {
     	$this->createdAt = new \DateTime();
-    	$this->owner = 1;
     	$this->status = Constants::STATUS_PENDING;
     
         $this->subtasks = new \Doctrine\Common\Collections\ArrayCollection();
