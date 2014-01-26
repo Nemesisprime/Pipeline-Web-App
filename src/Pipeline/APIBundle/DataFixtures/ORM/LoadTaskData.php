@@ -10,7 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 	
 use Doctrine\Common\Persistence\ObjectManager;
 
-use Pipeline\APIBundle\Constants;
+use Pipeline\APIBundle\Constants,
+    Pipeline\APIBundle\Tests\TestsContants;
 use Pipeline\APIBundle\Entity\User,
 	Pipeline\APIBundle\Entity\Task;
 
@@ -43,6 +44,7 @@ class LoadTaskData extends AbstractFixture implements FixtureInterface, Containe
      */
     public function load(ObjectManager $manager)
     {
+        /* We'll make a task */
         $task = new Task();
         $task->setName("Test 1");
         $task->setOwner($this->getReference('test-user-one'));
@@ -51,6 +53,9 @@ class LoadTaskData extends AbstractFixture implements FixtureInterface, Containe
 
         $manager->persist($task);
         $manager->flush();
+        
+        /* We'll make this referencable through the PHPUnit Test */
+        $this->addReference('test-task', $task); 
     }
     
     /**
