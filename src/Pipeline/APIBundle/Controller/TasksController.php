@@ -29,7 +29,7 @@ class TasksController extends FOSRestController
 
 
     /**
-     * [GET] /tasks
+     * [GET] /api/tasks
      * 
      * @access public
      * @return View Object

@@ -2,17 +2,26 @@
 
 namespace Pipeline\APIBundle\Tests\Controller;
 
-use Pipeline\APIBundle\Tests\APITest;
+use Pipeline\APIBundle\APITest;
+use Symfony\Component\HttpFoundation\Response;
 
 class TasksControllerTest extends APITest
-
-    /*
-public function testIndex()
+{   
+	/**
+	 * Test the getTasksAction.
+	 * 
+	 * @access public
+	 * @return void
+	 */
+	public function testGetTasks()
     {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/hello/Fabien');
+        $crawler = $this->client->request('GET', '/api/tasks');
 
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+        $this->assertTrue(in_array(
+            $this->client->getResponse()->getStatusCode(),
+            array(Response::HTTP_OK)),
+            "There wasn't an OK get Tasks response!"
+        );
     }
-*/
+
 }

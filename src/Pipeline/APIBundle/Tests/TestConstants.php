@@ -4,7 +4,7 @@ namespace Pipeline\APIBundle\Tests;
 /**
  * Constants static class.
  */
-class ConstantsTests
+class TestConstants
 {
     const TEST_USER_USERNAME = "JohnnyDoe";
     const TEST_USER_PASSWORD = "password";

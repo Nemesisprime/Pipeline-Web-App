@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Pipeline\APIBundle\Entity\User;
 
-use Pipeline\APIBundle\Tests\ConstantsTests;
+use Pipeline\APIBundle\Tests\TestConstants;
 
 /**
  * LoadUserData class.
@@ -43,12 +43,12 @@ class LoadUserData extends AbstractFixture implements FixtureInterface, Containe
      */
     public function load(ObjectManager $manager)
     {
-        $userManager = $container->get('fos_user.user_manager');
+        $userManager = $this->container->get('fos_user.user_manager');
         //make some users
         $user = $userManager->createUser();
-        $user->setUsername(ConstantsTests::TEST_USER_USERNAME);
-        $user->setEmail(ConstantsTests::TEST_USER_EMAIL);
-        $user->setPlainPassword(ConstantsTests::TEST_USER_PASSWORD);
+        $user->setUsername(TestConstants::TEST_USER_USERNAME);
+        $user->setEmail(TestConstants::TEST_USER_EMAIL);
+        $user->setPlainPassword(TestConstants::TEST_USER_PASSWORD);
         $userManager->updateUser($user);
         
         $this->addReference('test-user-one', $user);

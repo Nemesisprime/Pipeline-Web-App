@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 use Pipeline\APIBundle\Constants;
 use Pipeline\APIBundle\Entity\User,
-	Pipeline\APIBunle\Entity\Task;
+	Pipeline\APIBundle\Entity\Task;
 
 /**
  * LoadUserData class.

@@ -1,10 +1,10 @@
 <?php 
 
-namespace Pipeline\APIBundle\Tests;
+namespace Pipeline\APIBundle;
 
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
-use Pipeline\APIBundle\Tests\ConstantsTest;
+use Pipeline\APIBundle\Tests\TestConstants;
 
 /**
  * APITest class.
@@ -13,6 +13,8 @@ use Pipeline\APIBundle\Tests\ConstantsTest;
  */
 class APITest extends WebTestCase
 { 
+    public $client;
+
 	/**
 	 * Set up and load the fixtures.
 	 * 
@@ -27,10 +29,12 @@ class APITest extends WebTestCase
         );
         $this->loadFixtures($classes);
         
-		$this->login(ConstantsTest::TEST_USER_USERNAME, ConstantsTest::TEST_USER_PASSWORD);
+        $this->client = static::createClient();
+        
+		$this->login(TestConstants::TEST_USER_USERNAME, TestConstants::TEST_USER_PASSWORD);
     }
     
-    public function doLogin($username, $password) 
+    public function login($username, $password) 
     {
 		$crawler = $this->client->request('GET', '/login');
 		$form = $crawler->selectButton('_submit')->form(array(
@@ -39,8 +43,8 @@ class APITest extends WebTestCase
 			));     
 		$this->client->submit($form);
 		
-		$this->assertTrue($this->client->getResponse()->isRedirect());
+		$this->assertTrue($this->client->getResponse()->isRedirect(), "Login failed");
 		
-		$crawler = $this->client->followRedirect();
+		$this->client->followRedirects();
 	}
 }
