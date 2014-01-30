@@ -3,14 +3,16 @@
 namespace Pipeline\APIBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-	Symfony\Component\HttpFoundation\Request;
+	Symfony\Component\HttpFoundation\Request,
+	Symfony\Component\HttpFoundation\Response,
+    Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
 	Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-use FOS\RestBundle\Controller\FOSRestController,
-	FOS\RestBundle\Controller\Annotations\RouteResource,
+use Pipeline\APIBundle\Controller\APIController;
+use FOS\RestBundle\Controller\Annotations\RouteResource,
 	FOS\RestBundle\Routing\ClassResourceInterface;
 
 use Pipeline\APIBundle\Entity\Task,
@@ -19,15 +21,8 @@ use Pipeline\APIBundle\Entity\Task,
 /**
  * TasksController class.
  */
-class TasksController extends FOSRestController
+class TasksController extends APIController
 {
-
-	public function isOwn($task, $user) 
-	{ 
-		return ($task->getOwner()->getId() == $user->getId() ? true : false);
-	}
-
-
     /**
      * [GET] /api/tasks
      * 
@@ -47,7 +42,7 @@ class TasksController extends FOSRestController
         $tasks = $this->getDoctrine()->getRepository("APIBundle:Task")->findTasksFor($user);
         
         /* Hand the tasks to the View and say OK */
-        return $this->handleView($this->view($tasks, 200));
+        return $this->handleView($this->view($tasks, Response::HTTP_OK));
     }
 
     /**
@@ -71,7 +66,7 @@ class TasksController extends FOSRestController
 	    
 	    $view = $this->view();
         $view->setData($task);
-        $view->setStatusCode(200);
+        $view->setStatusCode(Response::HTTP_OK);
         
         return $this->get('fos_rest.view_handler')->handle($view);
     }
@@ -84,22 +79,28 @@ class TasksController extends FOSRestController
      */
     public function postTasksAction()
     {
-        $request = $this->getRequest();
+        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $task = new Task();
-        $task->setOwner($user);
-        
-        $form = $this->createForm(new TaskType(), $task);
-        $form->handleRequest($request);
-        
         $view = $this->view();
+        $request = $this->getRequest();
         
+        $taskrepo = $em->getRepository("APIBundle:Task")->register($user);
+        
+        $task = new Task();
+        
+        /* For future file support */
+        $form = $this->getRestForm('task', $task);
+        $form->handleRequest($request);
         if($form->isValid()) 
         { 
+            $taskrepo->rebind($task);
+            $em->persist($task);
+            $em->flush();
+        
         	$view->setData($task);
-            $view->setStatusCode(201, "Task created");
+            $view->setStatusCode(Response::HTTP_CREATED, "Task created");
         } else { 
-            throw new HttpException(400, $form->getErrorsAsString());
+            throw new HttpException(Response::HTTP_BAD_REQUEST, $form->getErrorsAsString());
         }
         
         return $this->get('fos_rest.view_handler')->handle($view);
@@ -115,7 +116,7 @@ class TasksController extends FOSRestController
     public function putTasksAction($slug) 
     { 
 	    $view = $this->view();
-        $view->setStatusCode(501); //Not Implemented, yet. When the API becomes open...
+        $view->setStatusCode(Response::HTTP_NOT_IMPLEMENTED); //Not Implemented, yet. When the API becomes open...
         
         return $this->get('fos_rest.view_handler')->handle($view);
     }

@@ -1,0 +1,8 @@
+parameters:
+    form.task.class: Pipeline\APIBundle\Entity\Task
+
+services:
+    pipline.form.type.task:
+        class: Pipeline\APIBundle\Form\TaskType
+        tags:
+            - { name: form.type, alias: task }

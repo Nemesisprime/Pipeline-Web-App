@@ -6,6 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Pipeline\APIBundle\Constants;
 
+use Pipeline\APIBundle\API\BindInterface;
+
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
@@ -18,7 +20,7 @@ use JMS\Serializer\Annotation\Expose;
  *
  * @ExclusionPolicy("all")
  */
-class Task
+class Task implements BindInterface
 {
     /**
      * @var integer

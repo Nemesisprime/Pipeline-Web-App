@@ -34,7 +34,7 @@ class APITest extends WebTestCase
 		$this->login(TestConstants::TEST_USER_USERNAME, TestConstants::TEST_USER_PASSWORD);
     }
     
-    public function login($username, $password) 
+    protected function login($username, $password) 
     {
 		$crawler = $this->client->request('GET', '/login');
 		$form = $crawler->selectButton('_submit')->form(array(
