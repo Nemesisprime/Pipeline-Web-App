@@ -10,8 +10,6 @@ use Pipeline\APIBundle\Entity\User;
 
 /**
  * APIRepository base class.
- * 
- * @extends EntityRepository
  */
 class APIRepository extends EntityRepository
 {
