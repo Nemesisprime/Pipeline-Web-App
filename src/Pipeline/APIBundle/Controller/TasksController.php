@@ -58,11 +58,17 @@ class TasksController extends APIController
     public function getTaskAction($id)
     {
 	    $user = $this->getUser();
-	    $task = $this->getDoctrine()->getRepository("APIBundle:Task")->find($id);
+	    $em = $this->getDoctrine()->getEntityManager();
+	    $taskrepo = $em->getRepository("APIBundle:Task")->register($user);
 	    
-	    if(!$task || !$this->isOwn($task, $user)) { 
-		    throw $this->createNotFoundException("No task ID $id is available.");
-	    }
+        $task = $taskrepo->find($id);
+        
+        if(!$task) 
+        { 
+            throw $this->createNotFoundException(
+                'No task available for id '.$id
+            );
+        }
 	    
 	    $view = $this->view();
         $view->setData($task);
@@ -88,7 +94,6 @@ class TasksController extends APIController
         
         $task = new Task();
         
-        /* For future file support */
         $form = $this->getRestForm('task', $task);
         $form->handleRequest($request);
         if($form->isValid()) 
@@ -110,13 +115,37 @@ class TasksController extends APIController
      * [PUT] /tasks/{id}
      * 
      * @access public
-     * @param mixed $slug
+     * @param integer $id
      * @return View Object
      */
-    public function putTasksAction($slug) 
+    public function putTasksAction($id) 
     { 
-	    $view = $this->view();
-        $view->setStatusCode(Response::HTTP_NOT_IMPLEMENTED); //Not Implemented, yet. When the API becomes open...
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $view = $this->view();
+        $request = $this->getRequest();
+        
+        $taskrepo = $em->getRepository("APIBundle:Task")->register($user);
+        $task = $taskrepo->find($id);
+        
+        if(!$task) 
+        { 
+            throw $this->createNotFoundException(
+                'No task available for id '.$id
+            );
+        }
+        
+        $form = $this->getRestForm('task', $task);
+        $form->handleRequest($request);
+        if($form->isValid()) 
+        { 
+            $em->flush();
+        
+        	$view->setData($task);
+            $view->setStatusCode(Response::HTTP_OK, "Task updated");
+        } else { 
+            throw new HttpException(Response::HTTP_BAD_REQUEST, $form->getErrorsAsString());
+        }
         
         return $this->get('fos_rest.view_handler')->handle($view);
     }

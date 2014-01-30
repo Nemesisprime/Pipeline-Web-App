@@ -14,6 +14,34 @@ use Pipeline\APIBundle\Entity\User;
  */
 class TaskRepository extends APIRepository
 {
+    /**
+     * Replace the underlying find function.
+     * 
+     * @access public
+     * @param mixed $id
+     * @return void
+     */
+    public function find($id) 
+    { 
+        $user = $this->getUser();
+        $em = $this->getEntityManager();
+        
+        $query = $em->createQuery(
+                      'SELECT t
+                       FROM APIBundle:Task t
+                       WHERE t.id = :id AND t.owner = :user')
+                    ->setParameters(array("id" => $id, "user" => $user));
+                    
+        return $query->getSingleResult();
+    }
+
+    /**
+     * Temporary task loading function...
+     * 
+     * @access public
+     * @param User $user
+     * @return void
+     */
     public function findTasksFor(User $user) 
     { 
         $em = $this->getEntityManager();

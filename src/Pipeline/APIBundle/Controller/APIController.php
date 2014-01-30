@@ -10,6 +10,8 @@ use FOS\RestBundle\Controller\FOSRestController,
 	FOS\RestBundle\Controller\Annotations\RouteResource,
 	FOS\RestBundle\Routing\ClassResourceInterface;
 	
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+	
 /**
  * APIController base class.
  */
